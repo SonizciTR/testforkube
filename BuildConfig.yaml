@@ -1,0 +1,27 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: oracle-runtime
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'oracle-runtime:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Containerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/SonizciTR/testforkube.git'
+      ref: master
+    contextDir: /container-images/oracle-runtime
+  triggers:
+    - type: ConfigChange
+  runPolicy: Serial
